@@ -1,9 +1,10 @@
-package es.uji.al394503.barbariangold
+package es.uji.al394503.barbariangold.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import es.uji.al394503.barbariangold.R
+import es.uji.vj1229.framework.GameActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : GameActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
