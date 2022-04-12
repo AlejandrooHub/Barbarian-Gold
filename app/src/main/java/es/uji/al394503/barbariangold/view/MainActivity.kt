@@ -25,14 +25,14 @@ class MainActivity : GameActivity() {
     }
 
     override fun onDrawingRequested(): Bitmap {
-        val size:Float = ((graphics.width/model.maze.nCols)/1.5f) + 1
+        val size:Float = ((graphics.width/model.maze.nCols)/1.5f) - 1
 /*
         val widthOffset = (model.maze.nCols.toFloat()/2f) * size + graphics.width/2
         val heightOffset = (model.maze.nRows.toFloat()/4f) * size + graphics.height/2
 */
 
-        val widthOffset = graphics.width/2 - model.maze.nCols/2 * size
-        val heightOffset = size
+        val widthOffset = (graphics.width - (model.maze.nCols * size))/2
+        val heightOffset = (graphics.height - (model.maze.nRows * size))/2
 
 
 
@@ -46,7 +46,7 @@ class MainActivity : GameActivity() {
                     CellType.HOME -> graphics.drawRect(j.toFloat()*size + widthOffset,i.toFloat()*size + heightOffset, size,size, Color.RED)
                     CellType.DOOR -> graphics.drawRect(j.toFloat()*size + widthOffset,i.toFloat()*size + heightOffset, size,size, Color.MAGENTA)
                     CellType.GOLD -> graphics.drawRect(j.toFloat()*size + widthOffset,i.toFloat()*size + heightOffset, size,size, Color.YELLOW)
-                    CellType.WALL -> graphics.drawRect(j.toFloat()*size + widthOffset,i.toFloat()*size + heightOffset, size+1,size+1, Color.LTGRAY)
+                    CellType.WALL -> graphics.drawRect(j.toFloat()*size + widthOffset,i.toFloat()*size + heightOffset, size,size, Color.LTGRAY)
                     else -> graphics.drawRect(j.toFloat()*size + widthOffset,i.toFloat()*size + heightOffset, size,size, Color.TRANSPARENT)
                 }
             }
