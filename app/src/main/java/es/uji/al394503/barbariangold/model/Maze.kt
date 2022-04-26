@@ -1,6 +1,7 @@
 package es.uji.al394503.barbariangold.model
 
 import android.util.Log
+import es.uji.vj1229.framework.Graphics
 import java.lang.StringBuilder
 
 /**
@@ -198,6 +199,8 @@ class Maze(diagram: Array<String>) {
             for (cell in row)
                 cell.used = false
     }
+
+
 
     companion object {
         /**
