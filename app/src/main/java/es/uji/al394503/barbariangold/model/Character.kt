@@ -4,8 +4,8 @@ import android.util.Log
 import kotlin.random.Random
 
 class Character(var position: Position, var facing: Direction, var speed : Float){
-    var x = position.col.toFloat()
-    var y = position.row.toFloat()
+    var x = position.col.toFloat() + 0.5f
+    var y = position.row.toFloat() + 0.5f
 
     fun setPosition(){
         position.col = x.toInt()
@@ -13,11 +13,32 @@ class Character(var position: Position, var facing: Direction, var speed : Float
     }
 
     fun toCenter(){
-        x = position.col.toFloat() + 0.5f
-        y = position.row.toFloat() + 0.5f
+        if(facing == Direction.UP || facing == Direction.DOWN)
+            x = position.col.toFloat() + 0.5f
+        else
+            y = position.row.toFloat() + 0.5f
     }
-    fun Move(){
-
+    fun Move(maze: Maze, deltaTime: Float){
+        if(!maze.hasWall(position, facing)) {
+            x += speed * deltaTime * facing.col
+            y += speed * deltaTime * facing.row
+        }
+        else{
+            when (facing){
+                Direction.DOWN ->
+                    if(y-position.row < 0.1f)
+                        y += speed * deltaTime
+                Direction.UP ->
+                    if(y-position.row > 0.1f)
+                        y -= speed * deltaTime
+                Direction.LEFT ->
+                    if(x-position.col > 0.1f)
+                        x -= speed * deltaTime
+                Direction.RIGHT ->
+                    if(x-position.col > 0.9f)
+                        x += speed * deltaTime
+            }
+        }
     }
     fun MoveRandom(maze: Maze, deltaTime : Float){
         if(!maze.hasWall(position, facing)) {
@@ -33,7 +54,6 @@ class Character(var position: Position, var facing: Direction, var speed : Float
             ) {
                 val newDirection = NewDirection(maze)
                 if (facing != newDirection) {
-                    //toCenter()
                     facing = newDirection
                 }
             }
@@ -51,7 +71,7 @@ class Character(var position: Position, var facing: Direction, var speed : Float
         if(posibilities.size == 1)
             return posibilities[0]
         else{
-            Log.d(null,posibilities[Random.nextInt(posibilities.size)].toString())
+            //Log.d(null,posibilities[Random.nextInt(posibilities.size)].toString())
             return  posibilities[Random.nextInt(posibilities.size)]
         }
     }

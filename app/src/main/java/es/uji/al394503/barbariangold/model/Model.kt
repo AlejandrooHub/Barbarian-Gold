@@ -6,6 +6,7 @@ class Model {
     val speed = 1f
     var enemies = ArrayList<Character>()
     var princes : Character
+    var lives : Int = 3
 
 
     object Levels {
@@ -62,7 +63,16 @@ class Model {
 
         for (i in 0 until 4){
             enemies.add(Character(enemiesPositions[i], Direction.RIGHT,speed))
-            enemies[i].toCenter()
+        }
+    }
+    fun ChargeLvL(Num : Int){
+        maze = Levels.all[Num]
+        princes = Character(maze.origin,Direction.UP,speed+1)
+        val enemiesPositions = maze.enemyOrigins
+
+
+        for (i in 0 until 4){
+            enemies.add(Character(enemiesPositions[i], Direction.RIGHT,speed))
         }
     }
 
@@ -70,6 +80,7 @@ class Model {
         for (enemy in enemies) {
             enemy.MoveRandom(maze,deltaTime)
         }
-        princes.Move()
+        princes.Move(maze,deltaTime)
+        princes.setPosition()
     }
 }
