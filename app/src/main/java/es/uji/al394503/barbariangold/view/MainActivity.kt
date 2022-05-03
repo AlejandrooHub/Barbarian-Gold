@@ -7,6 +7,7 @@ import android.util.Log
 import es.uji.al394503.barbariangold.controller.Controller
 import es.uji.al394503.barbariangold.model.CellType
 import es.uji.al394503.barbariangold.model.Model
+import es.uji.jvilar.frameworktest.Assets
 import es.uji.vj1229.framework.GameActivity
 import es.uji.vj1229.framework.Graphics
 import es.uji.vj1229.framework.IGameController
@@ -35,6 +36,8 @@ class MainActivity : GameActivity() {
 
         widthOffset = (graphics.width - (model.maze.nCols * size))/2
         heightOffset = (graphics.height - (model.maze.nRows * size))/2
+
+        Assets.createAssets(this, size.toInt())
     }
 
     override fun onDrawingRequested(): Bitmap {
