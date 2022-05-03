@@ -67,9 +67,9 @@ class Model {
     }
 
     fun Update(deltaTime: Float){
-        /*for (enemy in enemies) {
+        for (enemy in enemies) {
             enemy.MoveRandom(maze,deltaTime)
-        }*/
+        }
         princes.Move()
     }
 }

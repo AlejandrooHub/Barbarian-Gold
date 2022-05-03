@@ -24,16 +24,21 @@ class Character(var position: Position, var facing: Direction, var speed : Float
             x += speed * deltaTime * facing.col
             y += speed * deltaTime * facing.row
         }
+        val antPosX = position.col
+        val antPosY = position.row
         setPosition()
-        if(!maze[position].hasWall(facing.turnRight())
-            || !maze[position].hasWall(facing.turnLeft())
-        ) {
-            val newDirection = NewDirection(maze)
-            if (facing != newDirection) {
-                //toCenter()
-                facing = newDirection
+        if((position.col != antPosX) && (position.row != antPosY)){
+            if(!maze[position].hasWall(facing.turnRight())
+                || !maze[position].hasWall(facing.turnLeft())
+            ) {
+                val newDirection = NewDirection(maze)
+                if (facing != newDirection) {
+                    //toCenter()
+                    facing = newDirection
+                }
             }
         }
+
     }
     private fun NewDirection(maze: Maze):Direction{
         val posibilities = ArrayList<Direction>()
