@@ -27,7 +27,7 @@ class Character(var position: Position, var facing: Direction, var speed : Float
         val antPosX = position.col
         val antPosY = position.row
         setPosition()
-        if((position.col != antPosX) && (position.row != antPosY)){
+        if((position.col != antPosX) || (position.row != antPosY)){
             if(!maze[position].hasWall(facing.turnRight())
                 || !maze[position].hasWall(facing.turnLeft())
             ) {

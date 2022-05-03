@@ -61,7 +61,7 @@ class Model {
 
 
         for (i in 0 until 4){
-            enemies.add(Character(enemiesPositions[i], Direction.UP,speed))
+            enemies.add(Character(enemiesPositions[i], Direction.RIGHT,speed))
             enemies[i].toCenter()
         }
     }
