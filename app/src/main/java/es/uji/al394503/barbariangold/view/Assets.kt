@@ -28,6 +28,9 @@ object Assets {
         val resources = context.resources
         princessSprites?.recycle()
         princessSprites = BitmapFactory.decodeResource(resources, R.drawable.principesa)
+
+        enemmySprites?.recycle()
+        enemmySprites = BitmapFactory.decodeResource(resources, R.drawable.enemigo)
         princessSS = SpriteSheet(princessSprites, SPRITE_SIDE, SPRITE_SIDE).apply {
             princess?.recycle()
             princess = getScaledSprite(0, 0, side, side)
