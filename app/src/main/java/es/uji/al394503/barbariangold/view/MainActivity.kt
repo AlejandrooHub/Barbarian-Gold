@@ -43,6 +43,8 @@ class MainActivity : GameActivity() {
 
         showEnemies()
 
+        showPrinces()
+
         return graphics.frameBuffer
     }
 
@@ -119,6 +121,16 @@ class MainActivity : GameActivity() {
                 Color.GREEN
             )
         }
+    }
+
+    fun showPrinces(){
+        graphics.drawRect(
+            model.princes.x * size + widthOffset,
+            model.princes.y * size + heightOffset,
+            size - 5,
+            size - 5,
+            Color.MAGENTA
+        )
     }
 
     override fun buildGameController(): IGameController {
