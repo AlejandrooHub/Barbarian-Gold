@@ -90,13 +90,8 @@ class MainActivity : GameActivity() {
                         size + 1,
                         Color.YELLOW
                     )
-                    CellType.WALL -> graphics.drawRect(
-                        j.toFloat() * size + widthOffset,
-                        i.toFloat() * size + heightOffset,
-                        size + 1,
-                        size + 1,
-                        Color.LTGRAY
-                    )
+                    CellType.WALL -> wallOrientation(i, j)
+
                     else -> graphics.drawRect(
                         j.toFloat() * size + widthOffset,
                         i.toFloat() * size + heightOffset,
@@ -107,6 +102,15 @@ class MainActivity : GameActivity() {
                 }
             }
         }
+
+    }
+
+    fun wallOrientation(i: Int, j: Int){
+        if(i == 0 && j == 0)
+            graphics.drawBitmap(Assets.wallsSS?.getScaledSprite(0, 0, 0, 0),
+                j.toFloat() * size + widthOffset,
+                i.toFloat() * size + heightOffset,)
+
 
     }
 

@@ -26,19 +26,21 @@ object Assets {
     var reset: Drawable? = null
 
     var potion: Bitmap? = null
+    var walls: Bitmap? = null
+    var wallsSS: SpriteSheet? = null
 
     fun createAssets(context: Context, side: Int) {
         val resources = context.resources
         princessSprites?.recycle()
         princessSprites = BitmapFactory.decodeResource(resources, R.drawable.principesa)
 
-        enemmySprites?.recycle()
-        enemmySprites = BitmapFactory.decodeResource(resources, R.drawable.enemigo)
-
         princessSS = SpriteSheet(princessSprites, SPRITE_SIDE, SPRITE_SIDE).apply {
             princess?.recycle()
             princess = getScaledSprite(0, 0, side, side)
         }
+
+        enemmySprites?.recycle()
+        enemmySprites = BitmapFactory.decodeResource(resources, R.drawable.enemigo)
 
         enemmySS = SpriteSheet(enemmySprites, SPRITE_SIDE, SPRITE_SIDE).apply {
             enemmy?.recycle()
@@ -53,6 +55,13 @@ object Assets {
         potion?.recycle()
         potion = BitmapFactory.decodeResource(resources, R.drawable.potion)
 
+        walls?.recycle()
+        walls = BitmapFactory.decodeResource(resources, R.drawable.walls_x)
+
+        wallsSS = SpriteSheet(princessSprites, SPRITE_SIDE, SPRITE_SIDE).apply {
+            princess?.recycle()
+            princess = getScaledSprite(0, 0, side, side)
+        }
 
 /*
         if (reset == null)
