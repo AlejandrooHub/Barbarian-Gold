@@ -11,12 +11,10 @@ class Character(var position: Position, var facing: Direction, var speed : Float
         position.col = x.toInt()
         position.row = y.toInt()
     }
-
-    fun toCenter(){
-        if(facing == Direction.UP || facing == Direction.DOWN)
-            x = position.col.toFloat() + 0.5f
-        else
-            y = position.row.toFloat() + 0.5f
+    fun changePosition(pos: Position){
+        x = pos.col.toFloat()
+        y = pos.row.toFloat()
+        setPosition()
     }
     fun Move(maze: Maze, deltaTime: Float){
         if(!maze.hasWall(position, facing)) {
@@ -41,10 +39,7 @@ class Character(var position: Position, var facing: Direction, var speed : Float
         }
     }
     fun MoveRandom(maze: Maze, deltaTime : Float){
-        if(!maze.hasWall(position, facing)) {
-            x += speed * deltaTime * facing.col
-            y += speed * deltaTime * facing.row
-        }
+        Move(maze, deltaTime)
         val antPosX = position.col
         val antPosY = position.row
         setPosition()
@@ -74,6 +69,9 @@ class Character(var position: Position, var facing: Direction, var speed : Float
             //Log.d(null,posibilities[Random.nextInt(posibilities.size)].toString())
             return  posibilities[Random.nextInt(posibilities.size)]
         }
+    }
+    fun SamePosition(position2: Position):Boolean {
+        return (position2.col == position.col) && (position2.row == position.row)
     }
 
 }

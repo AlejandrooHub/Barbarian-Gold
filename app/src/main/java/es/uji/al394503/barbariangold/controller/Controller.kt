@@ -10,7 +10,7 @@ class Controller(var model: Model, view: MainActivity) : IGameController{
 
     private var gestureDetector : GestureDetector = GestureDetector()
     override fun onUpdate(deltaTime: Float, touchEvents: MutableList<TouchHandler.TouchEvent>?) {
-        if(model.maze.gold > 0 && model.lives > 0){
+        if(model.gold < model.maze.gold && model.lives > 0){
             model.Update(deltaTime)
             GestureController(touchEvents)
         }

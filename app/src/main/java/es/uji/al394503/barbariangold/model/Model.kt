@@ -2,11 +2,12 @@ package es.uji.al394503.barbariangold.model
 
 import kotlin.random.Random
 
-class Model {
+class Model() {
     val speed = 1f
     var enemies = ArrayList<Character>()
     var princes : Character
     var lives : Int = 3
+    var gold : Int = 0
 
 
     object Levels {
@@ -54,9 +55,9 @@ class Model {
     }
     var maze: Maze
         private set
-
     init {
         maze = Levels.all[0]
+
         princes = Character(maze.origin,Direction.UP,speed+1)
         val enemiesPositions = maze.enemyOrigins
 
@@ -77,10 +78,19 @@ class Model {
     }
 
     fun Update(deltaTime: Float){
-        for (enemy in enemies) {
-            enemy.MoveRandom(maze,deltaTime)
-        }
         princes.Move(maze,deltaTime)
         princes.setPosition()
+        if(maze.get(princes.position).type == CellType.GOLD){
+            maze.get(princes.position).type = CellType.EMPTY
+            gold++
+        }
+        for (enemy in enemies) {
+            enemy.MoveRandom(maze,deltaTime)
+            if(enemy.SamePosition(princes.position)){
+                enemy.changePosition(maze.enemyOrigins[Random.nextInt(maze.enemyOrigins.size)])
+                lives -= 1
+            }
+        }
+
     }
 }

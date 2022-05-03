@@ -14,7 +14,7 @@ enum class CellType {
 /**
  * A data class for representing the cells of the [Maze].
  */
-data class Cell (val type: CellType, var used: Boolean, val walls: Int) {
+data class Cell (var type: CellType, var used: Boolean, val walls: Int) {
     /**
      * Check whether there is a wall in the given [direction].
      *
