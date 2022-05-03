@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import androidx.core.graphics.scale
 import es.uji.al394503.barbariangold.R
 import es.uji.vj1229.framework.AnimatedBitmap
 import es.uji.vj1229.framework.Graphics
@@ -24,6 +25,8 @@ object Assets {
     var enemmyAnimated: AnimatedBitmap? = null
     var reset: Drawable? = null
 
+    var potion: Bitmap? = null
+
     fun createAssets(context: Context, side: Int) {
         val resources = context.resources
         princessSprites?.recycle()
@@ -31,6 +34,7 @@ object Assets {
 
         enemmySprites?.recycle()
         enemmySprites = BitmapFactory.decodeResource(resources, R.drawable.enemigo)
+
         princessSS = SpriteSheet(princessSprites, SPRITE_SIDE, SPRITE_SIDE).apply {
             princess?.recycle()
             princess = getScaledSprite(0, 0, side, side)
@@ -45,6 +49,10 @@ object Assets {
         princessAnimated = createAnimation(0, side)
         enemmyAnimated?.recycle()
         enemmyAnimated = createAnimation(0, side)
+
+        potion?.recycle()
+        potion = BitmapFactory.decodeResource(resources, R.drawable.potion)
+
 
 /*
         if (reset == null)

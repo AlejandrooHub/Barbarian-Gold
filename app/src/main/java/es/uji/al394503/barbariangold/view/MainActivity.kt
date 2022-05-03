@@ -64,12 +64,10 @@ class MainActivity : GameActivity() {
                         size + 1,
                         Color.WHITE
                     )
-                    CellType.POTION -> graphics.drawRect(
+                    CellType.POTION -> graphics.drawBitmap(
+                        Assets.potion,
                         j.toFloat() * size + widthOffset,
                         i.toFloat() * size + heightOffset,
-                        size + 1,
-                        size + 1,
-                        Color.BLUE
                     )
                     CellType.HOME -> graphics.drawRect(
                         j.toFloat() * size + widthOffset,
