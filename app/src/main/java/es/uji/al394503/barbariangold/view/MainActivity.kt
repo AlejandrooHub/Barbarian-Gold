@@ -106,12 +106,82 @@ class MainActivity : GameActivity() {
     }
 
     fun wallOrientation(i: Int, j: Int){
-        if(i == 0 && j == 0)
-            graphics.drawBitmap(Assets.wallsSS?.getScaledSprite(0, 0, 0, 0),
-                j.toFloat() * size + widthOffset,
-                i.toFloat() * size + heightOffset,)
+        var index = 0
 
+        // Esquinas del mapa
 
+        if(i == 0 && j == 0) // Esquina Superior Izquierda
+            index = 10
+        else if(i == 0 && j == model.maze.nCols) // Esquina Superior Derecha
+            index = 9
+        else if(i == model.maze.nRows && j == 0) // Esquina Inferior Izquierda
+            index = 7
+        else if(i == model.maze.nRows && j == model.maze.nCols) // Esquina Inferior Derecha
+            index = 8
+
+        // Bordes del mapa
+
+        else if(i == 0) // Límites horizontales
+            if(model.maze.get(i + 1, j).type != CellType.WALL)
+                index = 1
+            else
+                index = 4
+        else if(i == model.maze.nRows) // Límites horizontales (se podría juntar en un if, pero no se si tiene condicion de parada y puede provocar un out of bounds si no lo tiene)
+            if (model.maze.get(i - 1, j).type != CellType.WALL)
+                index = 1
+            else
+                index = 6
+        else if(j == 0) // Límites Verticales
+            if(model.maze.get(i, j + 1).type != CellType.WALL)
+                index = 0
+            else
+                index = 5
+        else if(j == model.maze.nCols) // Límites Verticales
+            if (model.maze.get(i, j - 1).type != CellType.WALL)
+                index = 0
+            else
+                index = 3
+
+        // Resto de casos
+
+        else {
+            var code = 0
+            if (model.maze.get(i + 1, j).type != CellType.WALL)
+                code += 1
+            if (model.maze.get(i - 1, j).type != CellType.WALL)
+                code += 2
+            if (model.maze.get(i, j + 1).type != CellType.WALL)
+                code += 4
+            if (model.maze.get(i, j - 1).type != CellType.WALL)
+                code += 8
+
+            when(code){
+                0->index = 14 //no hay ninguna imagen de una pared sin uniones
+                1->index = 12
+                2->index = 14
+                3->index = 0
+                4->index = 11
+                5->index = 10
+                6->index = 7
+                7->index = 5
+                8->index = 13
+                9->index = 9
+                10->index = 8
+                11->index = 3
+                12->index = 1
+                13->index = 4
+                14->index = 6
+                15->index = 2
+                else -> index = 14
+            }
+        }
+        /*
+        graphics.drawBitmap(
+            Assets.wallsSS?.getSprite(0, index),
+            j.toFloat() * size + widthOffset,
+            i.toFloat() * size + heightOffset,
+        )
+         */
     }
 
     fun showEnemies(){
