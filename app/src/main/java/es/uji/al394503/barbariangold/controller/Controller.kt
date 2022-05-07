@@ -6,7 +6,7 @@ import es.uji.al394503.barbariangold.view.MainActivity
 import es.uji.vj1229.framework.IGameController
 import es.uji.vj1229.framework.TouchHandler
 
-class Controller(var model: Model, view: MainActivity) : IGameController{
+class Controller(var model: Model,val view: MainActivity) : IGameController{
 
     private var gestureDetector : GestureDetector = GestureDetector()
     override fun onUpdate(deltaTime: Float, touchEvents: MutableList<TouchHandler.TouchEvent>?) {
@@ -15,11 +15,11 @@ class Controller(var model: Model, view: MainActivity) : IGameController{
             GestureController(touchEvents)
         }
         else{
+            view.showGameover()
             if(StartTouch(touchEvents))
             //Display the Game Over
                 if(model.lives > 0){
                     model.lives = 3
-                    //model.Le
                 }
 
             //Re-start the level

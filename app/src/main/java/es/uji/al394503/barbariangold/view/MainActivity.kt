@@ -48,6 +48,8 @@ class MainActivity : GameActivity() {
 
         showPrinces()
 
+        showHud()
+
         return graphics.frameBuffer
     }
 
@@ -205,6 +207,42 @@ class MainActivity : GameActivity() {
             size - 5,
             size - 5,
             Color.MAGENTA
+        )
+    }
+
+    fun showHud(){
+        //graphics.drawRect()
+        for(i in 0 until model.lives)
+            graphics.drawBitmap(
+                Assets.princess,
+                0f+i*5,0f
+            )
+        graphics.setTextColor(Color.WHITE)
+        graphics.setTextSize(4)
+        graphics.drawText(widthOffset,heightOffset + size * model.maze.nRows,model.gold.toString())
+    }
+    fun showGameover(){
+
+        graphics.drawRect(
+            model.maze.nCols * size / 4 + widthOffset,
+            model.maze.nRows *size/4 + heightOffset,
+            size*16,
+            size*16,
+            Color.WHITE
+        )
+        graphics.setTextColor(Color.RED)
+        graphics.setTextSize(4)
+        graphics.drawText(
+            model.maze.nCols * size / 2 + widthOffset,
+            model.maze.nRows *size/2 - heightOffset,
+            "Game over"
+        )
+        graphics.setTextColor(Color.BLUE)
+        graphics.setTextSize(2)
+        graphics.drawText(
+            model.maze.nCols * size / 2 + widthOffset,
+            model.maze.nRows *size/2 + heightOffset,
+            "Press to start"
         )
     }
 
