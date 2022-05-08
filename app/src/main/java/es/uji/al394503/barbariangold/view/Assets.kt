@@ -13,7 +13,7 @@ import es.uji.vj1229.framework.SpriteSheet
 object Assets {
     private const val DURATION = 0.2f
     private const val FRAMES = 10
-    private const val SPRITE_SIDE = 128
+    private const val SPRITE_SIDE = 64
 
     private var princessSprites: Bitmap? = null
     private var enemmySprites: Bitmap? = null
@@ -35,7 +35,7 @@ object Assets {
         princessSprites = BitmapFactory.decodeResource(resources, R.drawable.principesa)
 
         princessSS = SpriteSheet(princessSprites, SPRITE_SIDE, SPRITE_SIDE).apply {
-            princess?.recycle()
+            //princess?.recycle()
             princess = getScaledSprite(0, 0, side, side)
         }
 
@@ -59,7 +59,7 @@ object Assets {
         walls = BitmapFactory.decodeResource(resources, R.drawable.walls_x)
 
         wallsSS = SpriteSheet(walls, 32, 32).apply {
-            walls = getScaledSprite(0, 0, side, side)
+            walls = getScaledSprite(0, 0, side + 10, side + 10)
         }
 
 /*

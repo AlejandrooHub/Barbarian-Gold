@@ -7,6 +7,7 @@ import es.uji.al394503.barbariangold.controller.Controller
 import es.uji.al394503.barbariangold.model.CellType
 import es.uji.al394503.barbariangold.model.Model
 import es.uji.jvilar.frameworktest.Assets
+import es.uji.vj1229.framework.AnimatedBitmap
 import es.uji.vj1229.framework.GameActivity
 import es.uji.vj1229.framework.Graphics
 import es.uji.vj1229.framework.IGameController
@@ -20,6 +21,8 @@ class MainActivity : GameActivity() {
 
     var widthOffset = 0f
     var heightOffset = 0f
+
+    private var princessAnimation: AnimatedBitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -199,14 +202,12 @@ class MainActivity : GameActivity() {
 
     fun showPrinces(){
 
-
-        graphics.drawRect(
+        graphics.drawBitmap(
+            princessAnimation?.currentFrame,
             model.princes.x * size + widthOffset,
             model.princes.y * size + heightOffset,
-            size - 5,
-            size - 5,
-            Color.MAGENTA
-        )
+            )
+
     }
 
     fun showHud(){
@@ -247,6 +248,10 @@ class MainActivity : GameActivity() {
 
     override fun buildGameController(): IGameController {
         return Controller(model, this)
+    }
+
+    fun update(deltaTime: Float) {
+        princessAnimation?.update(deltaTime)
     }
 
 }
