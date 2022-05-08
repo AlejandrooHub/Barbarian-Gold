@@ -23,8 +23,8 @@ class MainActivity : GameActivity() {
     var widthOffset = 0f
     var heightOffset = 0f
 
-    private var princessAnimation: ArrayList<AnimatedBitmap>? = null
-    private var princessAnimation2: AnimatedBitmap? = null
+    private var princessAnimation: AnimatedBitmap? = null
+    private var enemmyAnimation: AnimatedBitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +43,9 @@ class MainActivity : GameActivity() {
 
         Assets.createAssets(this, size.toInt())
 
-        princessAnimation2 = Assets.princessFacingUpAnimated
+        princessAnimation = Assets.princessFacingUpAnimated
 
-        princessAnimation?.add(Assets.princessFacingUpAnimated!!)
-        princessAnimation?.add(Assets.princessFacingDownAnimated!!)
-        princessAnimation?.add(Assets.princessFacingRightAnimated!!)
-        princessAnimation?.add(Assets.princessFacingLeftAnimated!!)
+        enemmyAnimation = Assets.enemmyFacingRightAnimated
 
     }
 
@@ -94,10 +91,10 @@ class MainActivity : GameActivity() {
                         Color.TRANSPARENT
                     )
                     CellType.DOOR -> graphics.drawRect(
-                        j.toFloat() * size + widthOffset + 2,
-                        i.toFloat() * size + heightOffset + size/4,
-                        size + 1,
+                        j.toFloat() * size + widthOffset + size/4,
+                        i.toFloat() * size + heightOffset ,
                         size/2,
+                        size +1,
                         Color.WHITE
                     )
                     CellType.GOLD -> if(!model.maze.get(i,j).used)graphics.drawCircle(
@@ -205,21 +202,27 @@ class MainActivity : GameActivity() {
 
     fun showEnemies(){
 
+        for (enemmy in model.enemies){
+            if(enemmy.facing == Direction.UP)
+                enemmyAnimation = Assets.enemmyFacingUpAnimated
+            else if(enemmy.facing == Direction.DOWN)
+                enemmyAnimation = Assets.enemmyFacingDownAnimated
+            else if(enemmy.facing == Direction.RIGHT)
+                enemmyAnimation = Assets.enemmyFacingRightAnimated
+            else
+                enemmyAnimation = Assets.enemmyFacingLeftAnimated
 
-        for (i in 0 until model.enemies.size){
-            graphics.drawRect(
-                model.enemies[i].x * size + widthOffset,
-                model.enemies[i].y * size + heightOffset,
-                size - 5,
-                size - 5,
-                Color.GREEN
+            graphics.drawBitmap(
+                enemmyAnimation?.currentFrame,
+                enemmy.x * size + widthOffset,
+                enemmy.y * size + heightOffset,
             )
         }
     }
 
     fun showPrinces(){
 
-        val currentPrincess: AnimatedBitmap?
+        //val currentPrincess: AnimatedBitmap?
         /*
         if(model.princes.facing == Direction.UP)
             currentPrincess = princessAnimation?.get(0)
@@ -233,17 +236,17 @@ class MainActivity : GameActivity() {
 
  */
         if(model.princes.facing == Direction.UP)
-            princessAnimation2 = Assets.princessFacingUpAnimated
+            princessAnimation = Assets.princessFacingUpAnimated
         else if(model.princes.facing == Direction.DOWN)
-            princessAnimation2 = Assets.princessFacingDownAnimated
+            princessAnimation = Assets.princessFacingDownAnimated
         else if(model.princes.facing == Direction.RIGHT)
-            princessAnimation2 = Assets.princessFacingRightAnimated
+            princessAnimation = Assets.princessFacingRightAnimated
         else
-            princessAnimation2 = Assets.princessFacingLeftAnimated
+            princessAnimation = Assets.princessFacingLeftAnimated
 
 
         graphics.drawBitmap(
-            princessAnimation2?.currentFrame,
+            princessAnimation?.currentFrame,
             model.princes.x * size + widthOffset - 16,
             model.princes.y * size + heightOffset-32,
         )
@@ -304,15 +307,31 @@ class MainActivity : GameActivity() {
          */
 
         if(model.princes.facing == Direction.UP)
-            princessAnimation2 = Assets.princessFacingUpAnimated
+            princessAnimation = Assets.princessFacingUpAnimated
         else if(model.princes.facing == Direction.DOWN)
-            princessAnimation2 = Assets.princessFacingDownAnimated
+            princessAnimation = Assets.princessFacingDownAnimated
         else if(model.princes.facing == Direction.RIGHT)
-            princessAnimation2 = Assets.princessFacingRightAnimated
+            princessAnimation = Assets.princessFacingRightAnimated
         else
-            princessAnimation2 = Assets.princessFacingLeftAnimated
+            princessAnimation = Assets.princessFacingLeftAnimated
 
-        princessAnimation2?.update(deltaTime)
+        princessAnimation?.update(deltaTime)
+
+        for (enemmy in model.enemies){
+            if(enemmy.facing == Direction.UP)
+                enemmyAnimation = Assets.enemmyFacingUpAnimated
+            else if(enemmy.facing == Direction.DOWN)
+                enemmyAnimation = Assets.enemmyFacingDownAnimated
+            else if(enemmy.facing == Direction.RIGHT)
+                enemmyAnimation = Assets.enemmyFacingRightAnimated
+            else
+                enemmyAnimation = Assets.enemmyFacingLeftAnimated
+
+            enemmyAnimation?.update(deltaTime)
+        }
+
+
+
 
     }
 

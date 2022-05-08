@@ -25,6 +25,10 @@ object Assets {
     var princessFacingDownAnimated: AnimatedBitmap? = null
     var princessFacingRightAnimated: AnimatedBitmap? = null
     var princessFacingLeftAnimated: AnimatedBitmap? = null
+    var enemmyFacingUpAnimated: AnimatedBitmap? = null
+    var enemmyFacingDownAnimated: AnimatedBitmap? = null
+    var enemmyFacingRightAnimated: AnimatedBitmap? = null
+    var enemmyFacingLeftAnimated: AnimatedBitmap? = null
     var enemmyAnimated: AnimatedBitmap? = null
     var reset: Drawable? = null
 
@@ -51,12 +55,15 @@ object Assets {
         }
 
         //princessAnimated?.recycle()
-        princessFacingUpAnimated = createAnimation(8, side)
-        princessFacingLeftAnimated = createAnimation(9, side)
-        princessFacingDownAnimated = createAnimation(10, side)
-        princessFacingRightAnimated = createAnimation(11, side)
-        enemmyAnimated?.recycle()
-        enemmyAnimated = createAnimation(0, side)
+        princessFacingUpAnimated = createAnimation(8, side, true)
+        princessFacingLeftAnimated = createAnimation(9, side, true)
+        princessFacingDownAnimated = createAnimation(10, side, true)
+        princessFacingRightAnimated = createAnimation(11, side, true)
+
+        enemmyFacingUpAnimated = createAnimation(8, side, false)
+        enemmyFacingLeftAnimated = createAnimation(9, side, false)
+        enemmyFacingDownAnimated = createAnimation(10, side, false)
+        enemmyFacingRightAnimated = createAnimation(11, side, false)
 
         potion?.recycle()
         potion = BitmapFactory.decodeResource(resources, R.drawable.potion)
@@ -75,10 +82,16 @@ object Assets {
  */
     }
 
-    private fun createAnimation(index: Int, characterSide: Int): AnimatedBitmap {
+    private fun createAnimation(index: Int, characterSide: Int, isPrincess: Boolean): AnimatedBitmap {
         val frames = Array<Bitmap>(FRAMES) {
             val side = characterSide * (it + 1) / FRAMES
-            val sprite = princessSS!!.getScaledSprite(index, 0, side, side)
+            val sprite: Bitmap
+            if (isPrincess) {
+                sprite = princessSS!!.getScaledSprite(index, 0, side, side)
+            }
+            else {
+                sprite = enemmySS!!.getScaledSprite(index, 0, side, side)
+            }
             val x = (characterSide - side) / 2f
             with (Graphics(characterSide, characterSide)) {
                 drawBitmap(sprite, x, x)
