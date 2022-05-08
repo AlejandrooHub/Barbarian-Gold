@@ -17,7 +17,6 @@ class Controller(var model: Model,val view: MainActivity) : IGameController{
         else{
             view.showGameover()
             if(StartTouch(touchEvents))
-            //Display the Game Over
                 if(model.lives > 0){
                     model.lives = 3
                 }

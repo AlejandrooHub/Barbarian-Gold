@@ -8,7 +8,9 @@ import java.lang.StringBuilder
  * An enumeration for the types of [cells][Cell] in a [Maze].
  */
 enum class CellType {
-    POTION, GOLD, EMPTY, HOME, DOOR, ORIGIN, WALL
+    POTION, GOLD, EMPTY, HOME, DOOR, ORIGIN, WALL/*,
+    UPDOWN, RIGHTLEFT, INTERSECT, RINTER, UINTER, LINTER, DINTER,
+    UPRIG, UPLEF, LEFDOWN, RIGDOWN, LEFEND, UPEND, RIGEND, DOWNEND*/
 }
 
 /**
@@ -163,6 +165,7 @@ class Maze(diagram: Array<String>) {
                             CellType.DOOR -> DOOR
                             CellType.ORIGIN -> ORIGIN
                             CellType.WALL -> WALL
+                            else -> ""
                         }
                     )
                 }

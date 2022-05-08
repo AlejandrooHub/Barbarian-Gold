@@ -49,6 +49,8 @@ class MainActivity : GameActivity() {
 
         showHud()
 
+        //showGameover()
+
         return graphics.frameBuffer
     }
 
@@ -90,7 +92,11 @@ class MainActivity : GameActivity() {
                         size/5,
                         Color.YELLOW
                     )
-                    CellType.WALL -> wallOrientation(i, j)
+                    CellType.WALL -> graphics.drawBitmap(
+                        Assets.wallsSS?.getSprite(0,model.WallOrientation[i][j]),
+                        j.toFloat() * size + widthOffset,
+                        i.toFloat() * size + heightOffset,
+                    )
 
                     else -> graphics.drawRect(
                         j.toFloat() * size + widthOffset,
@@ -105,7 +111,7 @@ class MainActivity : GameActivity() {
 
     }
 
-    fun wallOrientation(i: Int, j: Int){
+    /*fun wallOrientation(i: Int, j: Int){
         val index: Int
 
         // Esquinas del mapa
@@ -181,7 +187,7 @@ class MainActivity : GameActivity() {
             i.toFloat() * size + heightOffset,
         )
 
-    }
+    }*/
 
     fun showEnemies(){
 
@@ -217,8 +223,8 @@ class MainActivity : GameActivity() {
                 0f+i*5,0f
             )
         graphics.setTextColor(Color.WHITE)
-        graphics.setTextSize(4)
-        graphics.drawText(widthOffset,heightOffset + size * model.maze.nRows,model.gold.toString())
+        graphics.setTextSize(50)
+        graphics.drawText(widthOffset,heightOffset + size * (model.maze.nRows+1),model.gold.toString())
     }
     fun showGameover(){
 
@@ -226,21 +232,21 @@ class MainActivity : GameActivity() {
             model.maze.nCols * size / 4 + widthOffset,
             model.maze.nRows *size/4 + heightOffset,
             size*16,
-            size*16,
+            size*8,
             Color.WHITE
         )
         graphics.setTextColor(Color.RED)
-        graphics.setTextSize(4)
+        graphics.setTextSize(50)
         graphics.drawText(
-            model.maze.nCols * size / 2 + widthOffset,
-            model.maze.nRows *size/2 - heightOffset,
+            model.maze.nCols * size / 2.5f + widthOffset,
+            model.maze.nRows * size / 5 + widthOffset,
             "Game over"
         )
         graphics.setTextColor(Color.BLUE)
-        graphics.setTextSize(2)
+        graphics.setTextSize(30)
         graphics.drawText(
-            model.maze.nCols * size / 2 + widthOffset,
-            model.maze.nRows *size/2 + heightOffset,
+            model.maze.nCols * size / 2.3f + widthOffset,
+            model.maze.nCols * size / 4 + widthOffset,
             "Press to start"
         )
     }

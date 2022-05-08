@@ -17,7 +17,7 @@ object Assets {
 
     private var princessSprites: Bitmap? = null
     private var enemmySprites: Bitmap? = null
-    private var princessSS: SpriteSheet? = null
+    var princessSS: SpriteSheet? = null
     private var enemmySS: SpriteSheet? = null
     var princess: Bitmap? = null
     var enemmy: Bitmap? = null
