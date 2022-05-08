@@ -6,6 +6,7 @@ import kotlin.random.Random
 class Character(var position: Position, var facing: Direction, var speed : Float){
     var x = position.col.toFloat() + 0.5f
     var y = position.row.toFloat() + 0.5f
+    var CellEnded : Boolean = true
 
     fun setPosition(){
         position.col = x.toInt()
@@ -22,28 +23,43 @@ class Character(var position: Position, var facing: Direction, var speed : Float
             y += speed * deltaTime * facing.row
         }
         else{
-            when (facing){
-                Direction.DOWN ->
-                    if(y-position.row < 0.1f)
-                        y += speed * deltaTime
-                Direction.UP ->
-                    if(y-position.row > 0.1f)
-                        y -= speed * deltaTime
-                Direction.LEFT ->
-                    if(x-position.col > 0.1f)
-                        x -= speed * deltaTime
-                Direction.RIGHT ->
-                    if(x-position.col > 0.9f)
-                        x += speed * deltaTime
-            }
+            EndCell(deltaTime)
         }
     }
+    fun EndCell(deltaTime: Float) : Boolean{
+        when (facing){
+            Direction.DOWN ->
+                if(y-position.row < 0.1f){
+                    y += speed * deltaTime
+                    return y-position.row >= 0.1f
+                }
+            Direction.UP ->
+                if(y-position.row > 0.1f) {
+                    y -= speed * deltaTime
+                    return y-position.row <= 0.1f
+                }
+            Direction.LEFT ->
+                if(x-position.col > 0.1f) {
+                    x -= speed * deltaTime
+                    return x-position.col <= 0.1f
+                }
+            Direction.RIGHT ->
+                if(x-position.col > 0.9f) {
+                    x += speed * deltaTime
+                    return x-position.col <= 0.9f
+                }
+        }
+        return false
+    }
     fun MoveRandom(maze: Maze, deltaTime : Float){
+        if(!CellEnded)
+            CellEnded = EndCell(deltaTime)
         Move(maze, deltaTime)
         val antPosX = position.col
         val antPosY = position.row
         setPosition()
         if((position.col != antPosX) || (position.row != antPosY)){
+            CellEnded = EndCell(deltaTime)
             if(!maze[position].hasWall(facing.turnRight())
                 || !maze[position].hasWall(facing.turnLeft())
             ) {
