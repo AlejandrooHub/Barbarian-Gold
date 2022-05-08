@@ -212,7 +212,7 @@ class MainActivity : GameActivity() {
             princessAnimation?.currentFrame,
             model.princes.x * size + widthOffset,
             model.princes.y * size + heightOffset,
-            )
+        )
 
     }
 
