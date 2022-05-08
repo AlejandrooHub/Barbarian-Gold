@@ -12,7 +12,7 @@ import es.uji.vj1229.framework.SpriteSheet
 
 object Assets {
     private const val DURATION = 0.2f
-    private const val FRAMES = 10
+    private const val FRAMES = 9
     private const val SPRITE_SIDE = 64
 
     private var princessSprites: Bitmap? = null
@@ -21,7 +21,10 @@ object Assets {
     private var enemmySS: SpriteSheet? = null
     var princess: Bitmap? = null
     var enemmy: Bitmap? = null
-    var princessAnimated: AnimatedBitmap? = null
+    var princessFacingUpAnimated: AnimatedBitmap? = null
+    var princessFacingDownAnimated: AnimatedBitmap? = null
+    var princessFacingRightAnimated: AnimatedBitmap? = null
+    var princessFacingLeftAnimated: AnimatedBitmap? = null
     var enemmyAnimated: AnimatedBitmap? = null
     var reset: Drawable? = null
 
@@ -48,7 +51,10 @@ object Assets {
         }
 
         //princessAnimated?.recycle()
-        princessAnimated = createAnimation(0, side)
+        princessFacingUpAnimated = createAnimation(8, side)
+        princessFacingLeftAnimated = createAnimation(9, side)
+        princessFacingDownAnimated = createAnimation(10, side)
+        princessFacingRightAnimated = createAnimation(11, side)
         enemmyAnimated?.recycle()
         enemmyAnimated = createAnimation(0, side)
 
@@ -72,7 +78,7 @@ object Assets {
     private fun createAnimation(index: Int, characterSide: Int): AnimatedBitmap {
         val frames = Array<Bitmap>(FRAMES) {
             val side = characterSide * (it + 1) / FRAMES
-            val sprite = princessSS!!.getScaledSprite(0, index, side, side)
+            val sprite = princessSS!!.getScaledSprite(index, 0, side, side)
             val x = (characterSide - side) / 2f
             with (Graphics(characterSide, characterSide)) {
                 drawBitmap(sprite, x, x)

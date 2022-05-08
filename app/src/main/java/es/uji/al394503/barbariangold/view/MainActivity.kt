@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import es.uji.al394503.barbariangold.controller.Controller
 import es.uji.al394503.barbariangold.model.CellType
+import es.uji.al394503.barbariangold.model.Direction
 import es.uji.al394503.barbariangold.model.Model
 import es.uji.jvilar.frameworktest.Assets
 import es.uji.vj1229.framework.AnimatedBitmap
@@ -22,7 +23,8 @@ class MainActivity : GameActivity() {
     var widthOffset = 0f
     var heightOffset = 0f
 
-    private var princessAnimation: AnimatedBitmap? = null
+    private var princessAnimation: ArrayList<AnimatedBitmap>? = null
+    private var princessAnimation2: AnimatedBitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +42,13 @@ class MainActivity : GameActivity() {
         heightOffset = (graphics.height - (model.maze.nRows * size))/2
 
         Assets.createAssets(this, size.toInt())
-        princessAnimation = Assets.princessAnimated
+
+        princessAnimation2 = Assets.princessFacingUpAnimated
+
+        princessAnimation?.add(Assets.princessFacingUpAnimated!!)
+        princessAnimation?.add(Assets.princessFacingDownAnimated!!)
+        princessAnimation?.add(Assets.princessFacingRightAnimated!!)
+        princessAnimation?.add(Assets.princessFacingLeftAnimated!!)
 
     }
 
@@ -210,8 +218,31 @@ class MainActivity : GameActivity() {
 
     fun showPrinces(){
 
+        val currentPrincess: AnimatedBitmap?
+        /*
+        if(model.princes.facing == Direction.UP)
+            currentPrincess = princessAnimation?.get(0)
+        else if(model.princes.facing == Direction.DOWN)
+            currentPrincess = princessAnimation?.get(1)
+        else if(model.princes.facing == Direction.RIGHT)
+            currentPrincess = princessAnimation?.get(2)
+        else
+            currentPrincess = princessAnimation?.get(3)
+
+
+ */
+        if(model.princes.facing == Direction.UP)
+            princessAnimation2 = Assets.princessFacingUpAnimated
+        else if(model.princes.facing == Direction.DOWN)
+            princessAnimation2 = Assets.princessFacingDownAnimated
+        else if(model.princes.facing == Direction.RIGHT)
+            princessAnimation2 = Assets.princessFacingRightAnimated
+        else
+            princessAnimation2 = Assets.princessFacingLeftAnimated
+
+
         graphics.drawBitmap(
-            princessAnimation?.currentFrame,
+            princessAnimation2?.currentFrame,
             model.princes.x * size + widthOffset,
             model.princes.y * size + heightOffset,
         )
@@ -259,7 +290,29 @@ class MainActivity : GameActivity() {
     }
 
     fun update(deltaTime: Float) {
-        princessAnimation?.update(deltaTime)
+        /*
+        if(model.princes.facing == Direction.UP)
+            princessAnimation?.get(0)?.update(deltaTime)
+        else if(model.princes.facing == Direction.DOWN)
+            princessAnimation?.get(1)?.update(deltaTime)
+        else if(model.princes.facing == Direction.RIGHT)
+            princessAnimation?.get(2)?.update(deltaTime)
+        else if(model.princes.facing == Direction.LEFT)
+            princessAnimation?.get(3)?.update(deltaTime)
+
+         */
+
+        if(model.princes.facing == Direction.UP)
+            princessAnimation2 = Assets.princessFacingUpAnimated
+        else if(model.princes.facing == Direction.DOWN)
+            princessAnimation2 = Assets.princessFacingDownAnimated
+        else if(model.princes.facing == Direction.RIGHT)
+            princessAnimation2 = Assets.princessFacingRightAnimated
+        else
+            princessAnimation2 = Assets.princessFacingLeftAnimated
+
+        princessAnimation2?.update(deltaTime)
+
     }
 
 }
