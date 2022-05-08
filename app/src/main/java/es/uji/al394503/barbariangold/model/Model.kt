@@ -184,12 +184,12 @@ class Model() {
     fun Update(deltaTime: Float){
         princes.Move(maze,deltaTime)
         princes.setPosition()
-        if(maze.get(princes.position).type == CellType.GOLD){
-            maze.get(princes.position).type = CellType.EMPTY
+        if(maze.get(princes.position).type == CellType.GOLD && !maze.get(princes.position).used){
+            maze.get(princes.position).used = true
             gold++
         }
-        else if(maze.get(princes.position).type == CellType.POTION){
-            maze.get(princes.position).type = CellType.EMPTY
+        else if(maze.get(princes.position).type == CellType.POTION && !maze.get(princes.position).used){
+            maze.get(princes.position).used = true
             potionTime = 100f
         }
         if(potionTime > 0){potionTime -= deltaTime}

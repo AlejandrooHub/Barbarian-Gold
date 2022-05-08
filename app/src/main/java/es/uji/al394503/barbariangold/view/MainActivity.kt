@@ -81,7 +81,7 @@ class MainActivity : GameActivity() {
                         size + 1,
                         Color.TRANSPARENT
                     )
-                    CellType.POTION -> graphics.drawBitmap(
+                    CellType.POTION -> if(!model.maze.get(i,j).used)graphics.drawBitmap(
                         Assets.potion,
                         j.toFloat() * size + widthOffset,
                         i.toFloat() * size + heightOffset,
@@ -100,7 +100,7 @@ class MainActivity : GameActivity() {
                         size/2,
                         Color.WHITE
                     )
-                    CellType.GOLD -> graphics.drawCircle(
+                    CellType.GOLD -> if(!model.maze.get(i,j).used)graphics.drawCircle(
                         j.toFloat() * size + widthOffset + size/2,
                         i.toFloat() * size + heightOffset + size/2,
                         size/5,
