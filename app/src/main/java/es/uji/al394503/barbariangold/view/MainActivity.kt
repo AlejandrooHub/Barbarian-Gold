@@ -62,7 +62,8 @@ class MainActivity : GameActivity() {
 
         showHud()
 
-        //showGameover()
+        if(model.lives == 0)
+            showGameover()
 
         return graphics.frameBuffer
     }
@@ -243,8 +244,8 @@ class MainActivity : GameActivity() {
 
         graphics.drawBitmap(
             princessAnimation2?.currentFrame,
-            model.princes.x * size + widthOffset,
-            model.princes.y * size + heightOffset,
+            model.princes.x * size + widthOffset - 16,
+            model.princes.y * size + heightOffset-32,
         )
 
     }
@@ -253,8 +254,8 @@ class MainActivity : GameActivity() {
         //graphics.drawRect()
         for(i in 0 until model.lives)
             graphics.drawBitmap(
-                Assets.princess,
-                0f+i*5,0f
+                Assets.princessSS!!.getScaledSprite(2,0,size.toInt(),size.toInt()),
+                widthOffset+ size * 4 +i*64,heightOffset + size * (model.maze.nRows+1)
             )
         graphics.setTextColor(Color.WHITE)
         graphics.setTextSize(50)

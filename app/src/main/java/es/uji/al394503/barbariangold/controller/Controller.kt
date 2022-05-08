@@ -16,11 +16,14 @@ class Controller(var model: Model,val view: MainActivity) : IGameController{
             GestureController(touchEvents)
         }
         else{
-            view.showGameover()
-            if(StartTouch(touchEvents))
-                if(model.lives > 0){
+            if(StartTouch(touchEvents)) {
+                if (model.lives > 0) {
                     model.lives = 3
                 }
+                else
+                    model.level += 1
+                model.ChargeLvL(model.level)
+            }
 
             //Re-start the level
         }
