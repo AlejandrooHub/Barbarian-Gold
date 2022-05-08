@@ -58,9 +58,8 @@ object Assets {
         walls?.recycle()
         walls = BitmapFactory.decodeResource(resources, R.drawable.walls_x)
 
-        wallsSS = SpriteSheet(princessSprites, SPRITE_SIDE, SPRITE_SIDE).apply {
-            princess?.recycle()
-            princess = getScaledSprite(0, 0, side, side)
+        wallsSS = SpriteSheet(walls, 32, 32).apply {
+            walls = getScaledSprite(0, 0, side, side)
         }
 
 /*
@@ -70,12 +69,12 @@ object Assets {
  */
     }
 
-    private fun createAnimation(index: Int, ballSide: Int): AnimatedBitmap {
+    private fun createAnimation(index: Int, characterSide: Int): AnimatedBitmap {
         val frames = Array<Bitmap>(FRAMES) {
-            val side = ballSide * (it + 1) / FRAMES
+            val side = characterSide * (it + 1) / FRAMES
             val sprite = princessSS!!.getScaledSprite(0, index, side, side)
-            val x = (ballSide - side) / 2f
-            with (Graphics(ballSide, ballSide)) {
+            val x = (characterSide - side) / 2f
+            with (Graphics(characterSide, characterSide)) {
                 drawBitmap(sprite, x, x)
                 frameBuffer
             }

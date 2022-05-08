@@ -3,7 +3,6 @@ package es.uji.al394503.barbariangold.view
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import es.uji.al394503.barbariangold.controller.Controller
 import es.uji.al394503.barbariangold.model.CellType
 import es.uji.al394503.barbariangold.model.Model
@@ -55,7 +54,7 @@ class MainActivity : GameActivity() {
 
     fun showMaze(){
 
-        graphics.clear(Color.BLUE)
+        graphics.clear(Color.DKGRAY)
         for (i in 0 until model.maze.nRows) {
             for (j in 0 until model.maze.nCols) {
                 when (model.maze.get(i, j).type) {
@@ -64,7 +63,7 @@ class MainActivity : GameActivity() {
                         i.toFloat() * size + heightOffset,
                         size + 1,
                         size + 1,
-                        Color.WHITE
+                        Color.TRANSPARENT
                     )
                     CellType.POTION -> graphics.drawBitmap(
                         Assets.potion,
@@ -76,20 +75,19 @@ class MainActivity : GameActivity() {
                         i.toFloat() * size + heightOffset,
                         size + 1,
                         size + 1,
-                        Color.BLUE
+                        Color.TRANSPARENT
                     )
                     CellType.DOOR -> graphics.drawRect(
-                        j.toFloat() * size + widthOffset,
-                        i.toFloat() * size + heightOffset,
+                        j.toFloat() * size + widthOffset + 2,
+                        i.toFloat() * size + heightOffset + size/4,
                         size + 1,
-                        size + 1,
-                        Color.MAGENTA
+                        size/2,
+                        Color.WHITE
                     )
-                    CellType.GOLD -> graphics.drawRect(
-                        j.toFloat() * size + widthOffset,
-                        i.toFloat() * size + heightOffset,
-                        size + 1,
-                        size + 1,
+                    CellType.GOLD -> graphics.drawCircle(
+                        j.toFloat() * size + widthOffset + size/2,
+                        i.toFloat() * size + heightOffset + size/2,
+                        size/5,
                         Color.YELLOW
                     )
                     CellType.WALL -> wallOrientation(i, j)
@@ -108,17 +106,16 @@ class MainActivity : GameActivity() {
     }
 
     fun wallOrientation(i: Int, j: Int){
-        var index = 0
+        val index: Int
 
         // Esquinas del mapa
-
         if(i == 0 && j == 0) // Esquina Superior Izquierda
             index = 10
-        else if(i == 0 && j == model.maze.nCols) // Esquina Superior Derecha
+        else if(i == 0 && j == model.maze.nCols - 1) // Esquina Superior Derecha
             index = 9
-        else if(i == model.maze.nRows && j == 0) // Esquina Inferior Izquierda
+        else if(i == model.maze.nRows - 1 && j == 0) // Esquina Inferior Izquierda
             index = 7
-        else if(i == model.maze.nRows && j == model.maze.nCols) // Esquina Inferior Derecha
+        else if(i == model.maze.nRows - 1 && j == model.maze.nCols - 1) // Esquina Inferior Derecha
             index = 8
 
         // Bordes del mapa
@@ -128,7 +125,7 @@ class MainActivity : GameActivity() {
                 index = 1
             else
                 index = 4
-        else if(i == model.maze.nRows) // Límites horizontales (se podría juntar en un if, pero no se si tiene condicion de parada y puede provocar un out of bounds si no lo tiene)
+        else if(i == model.maze.nRows - 1) // Límites horizontales (se podría juntar en un if, pero no se si tiene condicion de parada y puede provocar un out of bounds si no lo tiene)
             if (model.maze.get(i - 1, j).type != CellType.WALL)
                 index = 1
             else
@@ -138,7 +135,7 @@ class MainActivity : GameActivity() {
                 index = 0
             else
                 index = 5
-        else if(j == model.maze.nCols) // Límites Verticales
+        else if(j == model.maze.nCols - 1) // Límites Verticales
             if (model.maze.get(i, j - 1).type != CellType.WALL)
                 index = 0
             else
@@ -148,13 +145,13 @@ class MainActivity : GameActivity() {
 
         else {
             var code = 0
-            if (model.maze.get(i + 1, j).type != CellType.WALL)
+            if (model.maze.get(i + 1, j).type == CellType.WALL)
                 code += 1
-            if (model.maze.get(i - 1, j).type != CellType.WALL)
+            if (model.maze.get(i - 1, j).type == CellType.WALL)
                 code += 2
-            if (model.maze.get(i, j + 1).type != CellType.WALL)
+            if (model.maze.get(i, j + 1).type == CellType.WALL)
                 code += 4
-            if (model.maze.get(i, j - 1).type != CellType.WALL)
+            if (model.maze.get(i, j - 1).type == CellType.WALL)
                 code += 8
 
             when(code){
@@ -177,13 +174,13 @@ class MainActivity : GameActivity() {
                 else -> index = 14
             }
         }
-        /*
+
         graphics.drawBitmap(
             Assets.wallsSS?.getSprite(0, index),
             j.toFloat() * size + widthOffset,
             i.toFloat() * size + heightOffset,
         )
-         */
+
     }
 
     fun showEnemies(){
@@ -201,6 +198,8 @@ class MainActivity : GameActivity() {
     }
 
     fun showPrinces(){
+
+
         graphics.drawRect(
             model.princes.x * size + widthOffset,
             model.princes.y * size + heightOffset,
