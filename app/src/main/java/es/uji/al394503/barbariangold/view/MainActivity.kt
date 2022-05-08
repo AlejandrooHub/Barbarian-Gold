@@ -40,6 +40,8 @@ class MainActivity : GameActivity() {
         heightOffset = (graphics.height - (model.maze.nRows * size))/2
 
         Assets.createAssets(this, size.toInt())
+        princessAnimation = Assets.princessAnimated
+
     }
 
     override fun onDrawingRequested(): Bitmap {

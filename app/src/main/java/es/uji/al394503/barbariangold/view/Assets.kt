@@ -47,7 +47,7 @@ object Assets {
             enemmy = getScaledSprite(0, 0, side, side)
         }
 
-        princessAnimated?.recycle()
+        //princessAnimated?.recycle()
         princessAnimated = createAnimation(0, side)
         enemmyAnimated?.recycle()
         enemmyAnimated = createAnimation(0, side)
