@@ -18,11 +18,13 @@ class Controller(var model: Model,val view: MainActivity) : IGameController{
         else{
             if(StartTouch(touchEvents)) {
                 if (model.lives > 0) {
+                    model.maze.reset()
                     model.lives = 3
                 }
                 else
                     model.level += 1
                 model.ChargeLvL(model.level)
+                model.gold = 0
             }
 
             //Re-start the level
